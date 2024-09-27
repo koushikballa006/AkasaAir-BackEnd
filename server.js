@@ -14,7 +14,8 @@ app.use(express.urlencoded({ extended: true }));
 // Mount routers
 app.use('/api/auth', require('./src/routes/authRoutes'));
 app.use('/api/products', require('./src/routes/productRoutes'));
-// TODO: Add other routes as they are implemented
+app.use('/api/cart', require('./src/routes/cartRoutes'));
+app.use('/api/orders', require('./src/routes/orderRoutes'));
 
 // Error handling middleware
 app.use((err, req, res, next) => {
