@@ -15,7 +15,15 @@ const ProductSchema = new mongoose.Schema({
   category: {
     type: String,
     required: [true, 'Please specify a category'],
-    enum: ['Fruit', 'Vegetable', 'Non-veg', 'Bread', 'Other']
+    enum: [
+      'Bakery',           // Bread, Cakes, Baking Products
+      'Beverages',        // Water, Soft Drinks, Juices, Energy Drinks
+      'Dairy & Eggs',     // Milk, Yoghurts, Cheese, Eggs, Butter, Cream, Laban Drink
+      'Fresh To Go',      // Cereals, Cereal Bars, Spreads, Jams, Honey
+      'Fruits & Vegetables',  // Fresh Fruits and Vegetables
+      'Fresh & Frozen',   // Fresh and Frozen Products
+      'Other'
+    ]
   },
   price: {
     type: Number,
