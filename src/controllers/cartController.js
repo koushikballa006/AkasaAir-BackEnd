@@ -17,6 +17,14 @@ exports.addToCart = async (req, res) => {
       return res.status(404).json({ message: 'Product not found' });
     }
 
+    // Check if requested quantity is available in stock
+    if (quantity > product.inStock) {
+      return res.status(400).json({ 
+        message: 'Requested quantity exceeds available stock',
+        availableStock: product.inStock
+      });
+    }
+
     let cart = await Cart.findOne({ user: userId });
     if (!cart) {
       cart = new Cart({ user: userId, items: [] });
@@ -24,7 +32,16 @@ exports.addToCart = async (req, res) => {
 
     const existingItemIndex = cart.items.findIndex(item => item.product.toString() === productId);
     if (existingItemIndex > -1) {
-      cart.items[existingItemIndex].quantity += quantity;
+      // Check if the new total quantity exceeds the available stock
+      const newTotalQuantity = cart.items[existingItemIndex].quantity + quantity;
+      if (newTotalQuantity > product.inStock) {
+        return res.status(400).json({ 
+          message: 'Total requested quantity exceeds available stock',
+          availableStock: product.inStock,
+          currentCartQuantity: cart.items[existingItemIndex].quantity
+        });
+      }
+      cart.items[existingItemIndex].quantity = newTotalQuantity;
     } else {
       cart.items.push({ product: productId, quantity });
     }
