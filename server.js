@@ -10,7 +10,7 @@ const app = express();
 
 // Allow CORS requests from the frontend
 app.use(cors({
-  origin: '*', // Frontend URL
+  origin: 'https://akasa-air-front-end.vercel.app', // Frontend URL
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
